@@ -3,15 +3,19 @@ package com.project.backend.controllers;
 import com.project.backend.models.*;
 import com.project.backend.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ServletContextAware;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 // This controller will be deleted. Created for testing Hibernate mappings only.
@@ -38,6 +42,8 @@ public class TestController implements ServletContextAware {
     private ServletConfig servletConfig;
     @Autowired
     private ServletContext servletContext;
+    @Autowired
+    private ApplicationContext appContext;
 
     @GetMapping("/test/servlet/config")
     public ResponseEntity<String> getServletConfig() {
@@ -49,8 +55,25 @@ public class TestController implements ServletContextAware {
         return new ResponseEntity<String>("Servlet Context: " + servletContext.getContextPath(), HttpStatus.OK);
     }
 
+    // Getting all Beans from ApplicationContext
+    @GetMapping("/rest")
+    public String getBeans(Model model) {
+        String[] names = appContext.getBeanDefinitionNames();
+        List<String> l = new ArrayList<>();
+        for(String name: names) {
+            l.add(name.split("\\.")[name.split("\\.").length-1]);
+        }
+        Collections.sort(l);
+        for(String ll: l) {
+            System.out.println(l.indexOf(ll)+1+" "+ ll);
+        }
+        model.addAttribute("beans", l);
+        return "beans";
+    }
+
     @GetMapping("/test")
-    public String showUploadForm(Model model) {
+    public String test(Model model) {
+        System.out.println("CONTROLLER");
         Discount dis = discountRepo.getById(1l);
         System.out.println(dis.getPercentage());
         dis.setPercentage(dis.getPercentage()+5);

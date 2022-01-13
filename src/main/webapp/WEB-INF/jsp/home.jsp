@@ -8,7 +8,7 @@
     <%@ include file="header.jsp"%>
 </head>
 
-<c:if test="${userin}">Hello, ${userName}</c:if>
+<c:if test="${userin}">Hello, ${userName}!</c:if>
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>

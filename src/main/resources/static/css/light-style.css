@@ -1,6 +1,9 @@
+body{
+    background-color: #f0c3be;
+}
 
 .home-content-wrapper{
-    background-image: url("../images/shop1.png");
+    background-color: deeppink;
     background-size: cover;
     height: 700px;
 }

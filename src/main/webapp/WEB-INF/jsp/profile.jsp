@@ -1,19 +1,24 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ include file="header.jsp"%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="/css/rest.css">
     <title>Profile</title>
 </head>
-<%@ include file="header.jsp"%>
+
 <body>
+
 </br>
 <div align="center">
     </br>
    <h2>Profile</h2>
+    <form:form action="/lastName" method="POST" modelAttribute="user">
+        <form:select path="userName">
+            <form:options items ="${lastNames.values()}"></form:options>
+        </form:select>
+        <input type = "submit" value = "Submit"/>
+    </form:form>
+
+
     <table border="1" cellpadding="5">
         <tr>
             <th>Username</th>

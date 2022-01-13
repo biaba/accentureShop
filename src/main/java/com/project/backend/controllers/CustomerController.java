@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 // Controller for Logged In User
 @Controller
@@ -34,6 +36,26 @@ public class CustomerController {
         for(Purchase p: user.getPurchases()){
             p.feDateCreated = AddDateUtils.dateWithoutTime(p.getDateCreated());
         }
+        Map<String, String> lastNames = userService.findAllUsers().stream().collect(Collectors.toMap(User::getFirstName, User::getUsername));
+        model.addAttribute("lastNames", lastNames);
+        model.addAttribute("user", user);
+        return "profile";
+    }
+
+    @PostMapping("/lastName")
+    public String profile(@ModelAttribute("newUser") User newUser, Model model) {
+        String userName = newUser.getUserName();
+        System.out.println(" USERNAME "+newUser.getUsername()+" NAME "+newUser.getLastName());
+        User user = userService.getByUserName(userName);
+        List<Purchase> pur = user.getPurchases();
+        if(pur!=null) {
+            for(Purchase p: pur){
+                p.feDateCreated = AddDateUtils.dateWithoutTime(p.getDateCreated());
+            }
+        }
+
+        Map<String, String> lastNames = userService.findAllUsers().stream().collect(Collectors.toMap(User::getFirstName, User::getUsername));
+        model.addAttribute("lastNames", lastNames);
         model.addAttribute("user", user);
         return "profile";
     }

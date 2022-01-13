@@ -1,14 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <%@ include file="js.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="icon" type="image/x-icon" href="/images/Icon.png" >
+    <link rel="icon" type="image/x-icon" href="/images/icon.png" >
+   <!-- <link rel="stylesheet" href="css/style.css">-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/<spring:theme code='stylesheet'/>"/>
+
 </head>
 <sec:authorize access="hasAnyRole('ADMIN', 'CUSTOMER','LYCUSTOMER')" var="isAuthenticated"/>
 <sec:authorize access="hasRole('ADMIN')" var="isManager"/>
@@ -45,5 +50,8 @@
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/manager/discounts/add"><i class="glyphicon glyphicon-log-in"></i>Create Discount</a></li>
             </c:if>
         </ul>
+        <a href="?theme=dark">dark</a> | <a href="?theme=light">light</a>
     </div>
 </nav>
+</body>
+</html>

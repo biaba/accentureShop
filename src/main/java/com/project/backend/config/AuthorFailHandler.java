@@ -16,12 +16,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Component
-public class ShopAccessDeniedHandler implements AccessDeniedHandler {
+public class AuthorFailHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         response.setStatus(403);
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         response.getWriter().write("Forbidden:" + accessDeniedException.getMessage()+
                 ". You are not allowed to resource. Your role is:"+ Arrays.toString(authentication.getAuthorities().toArray()));

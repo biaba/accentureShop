@@ -1,9 +1,13 @@
 package com.project.backend.config;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+// Filter on Servlet. Specification on SecurityConfig while registering Filter
+@Component
 public final class LoggingFilter implements Filter {
 
     private FilterConfig filterConfigObj = null;
@@ -18,9 +22,7 @@ public final class LoggingFilter implements Filter {
         String protocol = request.getProtocol();
 
         chain.doFilter(request, response);
-        filterConfigObj.getServletContext().log("Logging Filter Servlet called ");
-        filterConfigObj.getServletContext().log("**************************");
-        filterConfigObj.getServletContext().log("User Logged in: User IP: " + remoteAddress +" Resource File: " + uri + " Protocol: " + protocol);
+        filterConfigObj.getServletContext().log("Logging Filter. User Logged in: User IP: " + remoteAddress +" Resource File: " + uri + " Protocol: " + protocol);
     }
 
     public void destroy() { }

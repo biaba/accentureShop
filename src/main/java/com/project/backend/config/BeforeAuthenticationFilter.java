@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+// Filter before Login to modify login fields (mix up email+username as Requested UsernamePasswordAuthenticationToken)
 public class BeforeAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
@@ -32,5 +33,4 @@ public class BeforeAuthenticationFilter extends UsernamePasswordAuthenticationFi
         System.out.println("Filter. Setting token for mixed username+email and password "+userNameEmail);
         return new UsernamePasswordAuthenticationToken(userNameEmail, password);
     }
-
 }
