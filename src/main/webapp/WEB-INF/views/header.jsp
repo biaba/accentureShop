@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ include file="js.jsp"%>
@@ -26,7 +26,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="nav navbar-nav navbar-left">
-            <li class="nav-item active"><a class="nav-link" href="home">Home <span class="sr-only">(current)</span></a></li>
+            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/home">Home <span class="sr-only">(current)</span></a></li>
             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/shop">Shop</a></li>
             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products/category/clothes">Clothes</a></li>
             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products/category/toys">Toys</a></li>
@@ -34,14 +34,14 @@
             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/registration">Registration</a></li>
             <li class="nav-item"><a class="nav-link" href="contact">Contacts</a></li>
             <li class="nav-item"><a class="nav-link" href="about">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/cart">Cart</a></li>
             <c:if test="${isAuthenticated}">
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout"><i class="glyphicon glyphicon-log-in"></i>Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/do_logout"><i class="glyphicon glyphicon-log-in"></i>Logout</a></li>
             </c:if>
             <c:if test="${!isAuthenticated}">
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/login"><i class="glyphicon glyphicon-log-in"></i>Login</a></li>
             </c:if>
             <c:if test="${isCustomer}">
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/cart">Cart</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/customer/profile"><i class="glyphicon glyphicon-log-in"></i>Profile</a></li>
             </c:if>
             <c:if test="${isManager}">

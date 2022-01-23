@@ -22,7 +22,9 @@ import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,6 +76,7 @@ public class UserServiceImpl implements UserService, ApplicationRunner {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("loadUserByUserName " + username);
         String[] userNameAndEmail = StringUtils.split(username, String.valueOf(Character.LINE_SEPARATOR));
+        System.out.println(userNameAndEmail.length);
         if (userNameAndEmail == null || userNameAndEmail.length != 2) {
             throw new UsernameNotFoundException("Username and email must be provided");
         }
@@ -116,15 +119,15 @@ public class UserServiceImpl implements UserService, ApplicationRunner {
         return user;
     }
 
-    public final boolean hasRole(String role) {
-        boolean hasRole = false;
-        UserDetails userDetails = loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        if (userDetails != null) {
-            if (isRolePresent((Collection<GrantedAuthority>) userDetails.getAuthorities(), role)) {
-                hasRole = true;
-            }
+    @Transactional
+    public boolean hasRole(String role) {
+        User user = userRepo.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+        Set<Role> roles = (Set<Role>) user.getRoles();
+        boolean contains = false;
+        for(Role r: roles) {
+            if(r.getRoleName().equals("ROLE_"+role)) { contains=true; }
         }
-        return hasRole;
+        return user!=null && contains;
     }
     private boolean isRolePresent(Collection<GrantedAuthority> authorities, String role) {
         boolean isRolePresent = false;

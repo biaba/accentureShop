@@ -33,7 +33,9 @@ public class ChartItemController {
     @GetMapping("/cart")
     public String showShoppingCart(Model model) {
         User user = userService.loggedInUser();
+        System.out.println("Logged in user: "+user.toString());
         List<ChartItem> cartItems= cartService.listChartItems(user);
+        System.out.println("Cart items: "+ cartItems);
         if(cartItems.size()==0) {
             model.addAttribute("emptyCart", "Your cart is empty.");
         } else {
@@ -47,7 +49,7 @@ public class ChartItemController {
             System.out.println(csrfToken+" got it");
         User user = userService.loggedInUser();
         Product product = productService.findProductById(id);
-        cartService.addCartItem(product, 1, user);
+        cartService.updateItem(user, product, 1);
         List<ChartItem> cartItems= cartService.listChartItems(user);
         model.addAttribute("cartItems", cartItems);
         return "shoppingcart";
@@ -57,7 +59,7 @@ public class ChartItemController {
     public String deleteProductFromCart(@PathVariable("id") Long id, Model model) {
         User user = userService.loggedInUser();
         Product product = productService.findProductById(id);
-        cartService.deleteCartItem(product, user);
+        cartService.deleteCartItem(user, product);
         List<ChartItem> cartItems= cartService.listChartItems(user);
         model.addAttribute("cartItems", cartItems);
         return "shoppingcart";

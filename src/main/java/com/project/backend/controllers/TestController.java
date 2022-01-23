@@ -2,10 +2,13 @@ package com.project.backend.controllers;
 
 import com.project.backend.models.*;
 import com.project.backend.repositories.*;
+import com.project.backend.services.ChartItemService;
+import com.project.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +16,10 @@ import org.springframework.web.context.ServletContextAware;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 // This controller will be deleted. Created for testing Hibernate mappings only.
 @Controller
@@ -37,7 +40,9 @@ public class TestController implements ServletContextAware {
     @Autowired
     UserRepository userRepo;
     @Autowired
-    ChartItemRepository chartRepo;
+    UserService userService;
+    @Autowired
+    ChartItemService cartService;
     @Autowired
     private ServletConfig servletConfig;
     @Autowired
@@ -57,7 +62,25 @@ public class TestController implements ServletContextAware {
 
     // Getting all Beans from ApplicationContext
     @GetMapping("/rest")
-    public String getBeans(Model model) {
+    public String getBeans(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println(" csrf is in session: "+ request.getSession().getAttribute("org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN"));
+
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        System.out.println(" csrf is in Request Attribute: /request - in Header/" + token.getHeaderName()+" token /value/ "+token.getToken()+" and /response - in Parameter/ "+ token.getParameterName());
+
+        System.out.println("Request attributes (one of them _csrf): "+request.getAttributeNames());
+        Iterator it = request.getAttributeNames().asIterator();
+        while(it.hasNext()){
+            System.out.println("Request attribute: "+it.next());
+        }
+
+
+        List<String> responseHeaderNames = (ArrayList<String>)response.getHeaderNames();
+        for(String rhn: responseHeaderNames) {
+            System.out.println("response header: "+rhn+" value: "+response.getHeader(rhn));
+        }
+
         String[] names = appContext.getBeanDefinitionNames();
         List<String> l = new ArrayList<>();
         for(String name: names) {
@@ -104,17 +127,6 @@ public class TestController implements ServletContextAware {
             System.out.println("Product: "+ p.toString());
         }
 
-        // adding item for user in shopping chart
-        Product p = productRepo.findById(2l).get();
-        User u = userRepo.findById(3l).get();
-        ChartItem chartItem = new ChartItem();
-        chartItem.setProduct(p);
-        chartItem.setUser(u);
-        chartItem.setQuantity(1);
-        ChartItem savedItem = chartRepo.save(chartItem);
-        System.out.println("Saved item in Chart " + savedItem.toString());
-
-
         /*Image im = imageRepo.getById(1l);
         System.out.println(im.toString());
 
@@ -131,6 +143,49 @@ public class TestController implements ServletContextAware {
         System.out.println(user.toString());*/
 
         return "test";
+    }
+
+    // Playing around with/without CSRF protection
+    @PostMapping("/test/go")
+    public String getBeans(HttpServletRequest req) {
+        System.out.println("Getting value from param: "+req.getParameter("val"));
+        System.out.println("Getting value from param: "+req.getParameter("_csrf"));
+        HttpSession session = req.getSession();
+        Iterator it = session.getAttributeNames().asIterator();
+        while(it.hasNext()) {
+            System.out.println("Session "+ it.next());
+        }
+        System.out.println("CSRF is in Session: "+ session.getAttribute("org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN"));
+        System.out.println("CSRF is in Request Attribute: " + req.getAttribute("_csrf"));
+        System.out.println("CSRF is in Request Parameter: " + req.getParameter("_csrf"));
+
+        return "home";
+    }
+
+    @GetMapping("/test/cart")
+    public String cart() {
+        // checking CartItem Repository
+        Product p = productRepo.findById(2l).get();
+        User u = userRepo.findById(3l).get();
+        Random random = new Random();
+        // Cart - updates or saves item
+        // ChartItem cartItem = cartService.updateItem(u,p,random.nextInt(10));
+        // Cart - deletes item from cart
+        // cartService.deleteCartItem(u,p);
+        // Cart - finds all user Items
+        // List<ChartItem> l = cartService.listChartItems(u);
+         return "testCart";
+    }
+
+    @GetMapping("/whoisloggedin")
+    public String whoIsLoggedIn() {
+        System.out.println("UserName of logged in user: " + userRepo.findByUserName(userService.loggedInUserName()).getUserName());
+        System.out.println("Am I logged in: "+userService.isLoggedIn());
+        System.out.println("HERE "+userRepo.getUserByEmail("aprily@inbox.lv"));
+        System.out.println("Is my role 'customer': "+userService.hasRole("CUSTOMER"));
+        System.out.println("");
+
+        return "testCart";
     }
 
     @Override

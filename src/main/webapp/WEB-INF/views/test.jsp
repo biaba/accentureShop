@@ -1,16 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>THIS PAGE IS FOR TESTING HIBERNATE MAPPINGS</title>
 </head>
 <body>
+<%@ include file="header.jsp"%>
 
 <div align="center">
+    <form:form action="${pageContext.request.contextPath}/test/go" method="POST">
+        <input type="text" name="val"/>
+        <input type="submit">
+
+    </form:form>
+</br>
+    <form action="${pageContext.request.contextPath}/test/go" method="POST">
+        <input type="text" name="val"/>
+        <input type="submit">
+    </form>
+
+    <p>
+        CSRF value: ${_csrf.getToken()}</br>
+        CSRF header name: ${_csrf.getHeaderName()}</br>
+        CSRF param name: ${_csrf.getParameterName()}
+
+    </p>
     <table border="1" cellpadding="5">
         <caption><h2>THIS PAGE IS FOR TESTING HIBERNATE MAPPINGS</h2></caption>
         <tr>

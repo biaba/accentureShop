@@ -33,22 +33,21 @@ public class ChartItemServiceImpl implements ChartItemService {
         return cartItems;
     }
 
-    public Integer addCartItem(Product product, int quantity, User user) {
+    public ChartItem updateItem(User user, Product product, int quantity) {
         ChartItem cartItem = cartRepo.findByUserAndProduct(user, product);
-        if(cartItem!=null) {
-            cartItem.setQuantity(cartItem.getQuantity()+1);
-        } else {
+        if(cartItem==null) {
             cartItem = new ChartItem();
             cartItem.setProduct(product);
             cartItem.setUser(user);
-            cartItem.setQuantity(1);
         }
-        Integer currentQnt = cartRepo.save(cartItem).getQuantity();
-        return currentQnt;
+        cartItem.setQuantity(quantity);
+        cartItem = cartRepo.save(cartItem);
+        return cartItem;
     }
 
     @Transactional
-    public void deleteCartItem(Product product, User user) {
+    public void deleteCartItem(User user, Product product) {
         cartRepo.deleteByUserAndProduct(user, product);
     }
 }
+

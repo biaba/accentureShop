@@ -1,5 +1,6 @@
 package com.project.backend.controllers;
 
+import com.project.backend.models.ChartItem;
 import com.project.backend.services.ChartItemService;
 import com.project.backend.services.ProductService;
 import com.project.backend.services.UserService;
@@ -22,8 +23,8 @@ public class RestChartItemController {
     public @ResponseBody
     String addProductToShoppingCart(@RequestParam("id") Long id, @RequestParam("qnt") int quantity) {
         if(userService.loggedInUser()!=null && !userService.loggedInUser().getUserName().equals("anonymousUser")) {
-            Integer currentQuantity = cartService.addCartItem(productService.findProductById(id), quantity, userService.loggedInUser());
-            return "The product quantity is: "+currentQuantity;
+            ChartItem currentItem = cartService.updateItem(userService.loggedInUser(), productService.findProductById(id), quantity);
+            return "The product quantity is: "+currentItem.getQuantity();
         }else{
             return "You must log in to use a shopping cart";
         }

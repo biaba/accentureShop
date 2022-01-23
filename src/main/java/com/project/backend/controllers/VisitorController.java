@@ -57,11 +57,14 @@ public class VisitorController {
     @GetMapping(value="/login")
     public String login() {return "login";}
 
-    @GetMapping("/logout")
+    @GetMapping("/do_logout")
     public String logout() {return "home";}
 
     @GetMapping("/about")
-    public String about() {return "about";}
+    public String about(Model model) {
+        model.addAttribute("name", "Mia");
+        return "th_about";
+    }
 
     @GetMapping("/contact")
     public String contact() {return "contact";}

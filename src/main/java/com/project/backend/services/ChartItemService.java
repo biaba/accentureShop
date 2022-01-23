@@ -10,7 +10,7 @@ public interface ChartItemService {
 
     List<ChartItem> listChartItems(User user);
 
-    Integer addCartItem(Product product, int quantity, User user);
+    ChartItem updateItem(User user, Product product, int quantity);
 
-    void deleteCartItem(Product product, User user);
+    void deleteCartItem(User user, Product product);
 }
