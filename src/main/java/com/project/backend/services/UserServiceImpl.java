@@ -60,17 +60,6 @@ public class UserServiceImpl implements UserService, ApplicationRunner {
         return saved;
     }
 
-/*    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepo.findByUserName(userName);
-        if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
-    }*/
-
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -129,6 +118,7 @@ public class UserServiceImpl implements UserService, ApplicationRunner {
         }
         return user!=null && contains;
     }
+
     private boolean isRolePresent(Collection<GrantedAuthority> authorities, String role) {
         boolean isRolePresent = false;
         for (GrantedAuthority grantedAuthority : authorities) {

@@ -1,6 +1,8 @@
 package com.project.backend.controllers;
 
+import com.project.backend.mappers.UserMapper;
 import com.project.backend.models.*;
+import com.project.backend.models.modelsFront.UserFront;
 import com.project.backend.repositories.ImageRepository;
 import com.project.backend.services.ChartItemService;
 import com.project.backend.services.DiscountService;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +35,8 @@ public class ManagerController {
     DiscountService discountService;
     @Autowired
     ChartItemService cartService;
+    @Autowired
+    UserMapper userMapper;
 
     // Gets a list of all customers
     @GetMapping("/manager/customers")
@@ -44,7 +49,11 @@ public class ManagerController {
     // Sort customers by total money spent
     @GetMapping("/manager/customers/top/amount")
     public String customersTopSale(Model model) {
-        List<UserActivity> customers = userService.findAllUsersByMoneySpent();
+        List<UserFront> customers = new ArrayList<>();
+        List<UserActivity> ua = userService.findAllUsersByMoneySpent();
+        for(UserActivity u: ua){
+            customers.add(userMapper.getUserFrontFromUserActivity(u));
+        }
         model.addAttribute("customers", customers);
         model.addAttribute("addInfo", true);
         return "customers";
@@ -101,10 +110,6 @@ public class ManagerController {
         InputStream inputStream = new ByteArrayInputStream(bytes);
         IOUtils.copy(inputStream, response.getOutputStream());
     }
-
-
-
-
 
     // Creates a product
     @PostMapping("/manager/products/add")

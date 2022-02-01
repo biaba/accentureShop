@@ -213,3 +213,12 @@
 22-01-21 Fri 12:50:41.733 [http-nio-8080-exec-1] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 300 
 22-01-21 Fri 14:07:42.713 [http-nio-8080-exec-5] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 68 
 22-01-23 Sun 11:29:37.179 [http-nio-8080-exec-7] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 8 
+22-01-31 Mon 13:19:36.554 [http-nio-8080-exec-5] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 331 
+22-01-31 Mon 13:22:42.786 [http-nio-8080-exec-2] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 1164 
+22-01-31 Mon 13:22:51.448 [http-nio-8080-exec-4] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 9 
+22-01-31 Mon 13:22:58.661 [http-nio-8080-exec-6] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 10 
+22-01-31 Mon 13:23:17.193 [http-nio-8080-exec-8] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 8 
+22-01-31 Mon 13:23:23.150 [http-nio-8080-exec-4] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 6 
+22-01-31 Mon 13:23:29.680 [http-nio-8080-exec-10] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 8 
+22-02-01 Tue 09:49:58.545 [http-nio-8080-exec-8] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 207 
+22-02-01 Tue 11:42:06.913 [http-nio-8080-exec-3] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 217 
