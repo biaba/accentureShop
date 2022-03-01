@@ -34,7 +34,8 @@
             <p>email: baiba.skujevska@gmail.com</p>
             <p>username: manager</p>
             <p><b>Loyal customer:</b></p>
-            <p>not available yet</p>
+            <p>email: liepa@gmail.com</p>
+            <p>username: lycustomer</p>
             <p><b>Password for all users:</b></p>
             <p>the same as username</p>
             <div class="panel-heading">

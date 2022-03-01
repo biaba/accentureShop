@@ -44,6 +44,7 @@
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/customer/profile"><i class="glyphicon glyphicon-log-in"></i>Profile</a></li>
             </c:if>
             <c:if test="${isManager}">
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/manager/customers/export/excel"><i class="glyphicon glyphicon-log-in"></i>Customers in excel</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/manager/customers"><i class="glyphicon glyphicon-log-in"></i>Customers</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/manager/products/add"><i class="glyphicon glyphicon-log-in"></i>Create Product</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/manager/discounts/add"><i class="glyphicon glyphicon-log-in"></i>Create Discount</a></li>
