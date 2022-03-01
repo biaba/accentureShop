@@ -978,3 +978,6 @@ Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'user0_.first_name' 
 22-03-01 Tue 15:49:17.651 [http-nio-9090-exec-9] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 8 
 22-03-01 Tue 15:51:43.932 [http-nio-9090-exec-2] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 1239 
 22-03-01 Tue 15:52:07.234 [http-nio-9090-exec-5] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 8 
+22-03-01 Tue 16:16:34.785 [http-nio-9090-exec-9] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 341 
+22-03-01 Tue 16:19:14.140 [http-nio-9090-exec-1] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 400 
+22-03-01 Tue 16:27:25.705 [http-nio-9090-exec-6] [1;31mERROR[0;39m [36mc.p.b.c.LoginInterceptor[0;39m - Login display in msec: 401 
