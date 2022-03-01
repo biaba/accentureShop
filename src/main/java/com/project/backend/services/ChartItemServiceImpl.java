@@ -25,7 +25,6 @@ public class ChartItemServiceImpl implements ChartItemService {
     ProductService productService;
 
     public List<ChartItem> listChartItems(User user) {
-
         List<ChartItem> cartItems = cartRepo.findByUser(user);
         for(ChartItem c: cartItems)        {
             productService.calculateDiscounts(c.getProduct());

@@ -11,14 +11,6 @@
 <div align="center">
     </br>
    <h2>Profile</h2>
-    <form:form action="/lastName" method="POST" modelAttribute="user">
-        <form:select path="userName">
-            <form:options items ="${lastNames.values()}"></form:options>
-        </form:select>
-        <input type = "submit" value = "Submit"/>
-    </form:form>
-
-
     <table border="1" cellpadding="5">
         <tr>
             <th>Username</th>

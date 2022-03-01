@@ -114,7 +114,7 @@ public class TestController implements ServletContextAware {
             // getting entity from with composite primary key
         PurchaseProductId id = new PurchaseProductId();
         id.setPurchaseId(3l);
-        id.setProductId(1l);
+        id.setProductId(2l);
         PurchasesProducts pp = ppRepo.getById(id);
             // changing amount
         pp.setAmount(4);
