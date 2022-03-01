@@ -1,11 +1,14 @@
 package com.project.backend.controllers;
 
 import com.project.backend.models.*;
+import com.project.backend.models.modelsFront.UserFront;
 import com.project.backend.rest.RestDogService;
 import com.project.backend.services.DiscountService;
 import com.project.backend.services.ImageService;
 import com.project.backend.services.ProductService;
 import com.project.backend.services.UserService;
+import com.project.backend.swagger.DescriptiveVariables;
+import io.swagger.annotations.*;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
+@Api(tags = {DescriptiveVariables.VISITOR})
 @Controller
 public class VisitorController {
 
@@ -76,8 +80,16 @@ public class VisitorController {
     public String product() {return "product";}
 
     // View all products within category
+    @ApiOperation(value = "Show products by Category",
+                notes = "Provide category name to get the product list from within it",
+                response = UserFront.class )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response"),
+            @ApiResponse(code = 401, message = "Authentication required")
+    })
     @GetMapping("/products/category/{name}")
-    public String productsByCategory(@PathVariable("name") String name, Model model) {
+    public String productsByCategory(@ApiParam(value = "Category name", required = true)
+                                         @PathVariable("name") String name, Model model) {
        prepareModelForCategory(model, name, Mode.GENERAL);
         return "products";
     }

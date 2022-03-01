@@ -1,11 +1,14 @@
 package com.project.backend.controllers;
 
+import com.project.backend.mappers.UserMapper;
 import com.project.backend.models.*;
+import com.project.backend.models.modelsFront.UserFront;
 import com.project.backend.repositories.ImageRepository;
 import com.project.backend.services.ChartItemService;
 import com.project.backend.services.DiscountService;
 import com.project.backend.services.ProductService;
 import com.project.backend.services.UserService;
+import com.project.backend.utils.UserExcelExporter;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -32,6 +40,8 @@ public class ManagerController {
     DiscountService discountService;
     @Autowired
     ChartItemService cartService;
+    @Autowired
+    UserMapper userMapper;
 
     // Gets a list of all customers
     @GetMapping("/manager/customers")
@@ -44,7 +54,11 @@ public class ManagerController {
     // Sort customers by total money spent
     @GetMapping("/manager/customers/top/amount")
     public String customersTopSale(Model model) {
-        List<UserActivity> customers = userService.findAllUsersByMoneySpent();
+        List<UserFront> customers = new ArrayList<>();
+        List<UserActivity> ua = userService.findAllUsersByMoneySpent();
+        for(UserActivity u: ua){
+            customers.add(userMapper.getUserFrontFromUserActivity(u));
+        }
         model.addAttribute("customers", customers);
         model.addAttribute("addInfo", true);
         return "customers";
@@ -72,6 +86,23 @@ public class ManagerController {
         return "customers";
     }*/
 
+    @GetMapping("/manager/customers/export/excel")
+    public void exportToExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+        List<User> listUsers = userService.findAllUsers();
+
+        UserExcelExporter excelExporter = new UserExcelExporter(listUsers);
+
+        excelExporter.export(response);
+    }
+
     @GetMapping("/manager/createproduct")
     public String showUploadForm() {
         return "imageup";
@@ -82,13 +113,11 @@ public class ManagerController {
         if (image != null) {
             System.out.println("Saving file: " + image.getOriginalFilename());
             Image uploadFile = new Image();
-            uploadFile.setProduct(productService.findProductById(3l));
+            uploadFile.setProduct(productService.findProductById(2l));
             uploadFile.setName(image.getOriginalFilename());
             uploadFile.setContent(image.getBytes());
             Long id = imageRepo.save(uploadFile).getId();
-            List<Image> images = productService.findProductById(3l).getImages();
             model.addAttribute("id", id);
-            model.addAttribute("image", images.get(images.size()-1));
         }
         return "imageup";
     }
@@ -101,10 +130,6 @@ public class ManagerController {
         InputStream inputStream = new ByteArrayInputStream(bytes);
         IOUtils.copy(inputStream, response.getOutputStream());
     }
-
-
-
-
 
     // Creates a product
     @PostMapping("/manager/products/add")

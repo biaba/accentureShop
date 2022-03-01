@@ -24,12 +24,17 @@
 
         <div class="panel panel-info">
             <p><b>Register or log in as:</b></p>
+            <p><b>Admin:</b></p>
+            <p>email: admin@gmail</p>
+            <p>username: admin</p>
             <p><b>Customer:</b></p>
+            <p>email: aprily@inbox.lv</p>
             <p>username: customer</p>
             <p><b>Manager:</b></p>
+            <p>email: baiba.skujevska@gmail.com</p>
             <p>username: manager</p>
             <p><b>Loyal customer:</b></p>
-            <p>username: lycustomer</p>
+            <p>not available yet</p>
             <p><b>Password for all users:</b></p>
             <p>the same as username</p>
             <div class="panel-heading">

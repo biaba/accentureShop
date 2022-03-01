@@ -11,12 +11,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="/images/icon.png" >
-   <!-- <link rel="stylesheet" href="css/style.css">-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/<spring:theme code='stylesheet'/>"/>
 
 </head>
-<sec:authorize access="hasAnyRole('ADMIN', 'CUSTOMER','LYCUSTOMER')" var="isAuthenticated"/>
-<sec:authorize access="hasRole('ADMIN')" var="isManager"/>
+<sec:authorize access="hasAnyRole('ADMIN', 'MANAGER','CUSTOMER','LYCUSTOMER')" var="isAuthenticated"/>
+<sec:authorize access="hasAnyRole('ADMIN','MANAGER')" var="isManager"/>
 <sec:authorize access="hasAnyRole('CUSTOMER','LYCUSTOMER')" var="isCustomer"/>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -31,13 +30,13 @@
             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products/category/clothes">Clothes</a></li>
             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products/category/toys">Toys</a></li>
             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products/category/accessories">Accessories</a></li>
-            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/registration">Registration</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact">Contacts</a></li>
-            <li class="nav-item"><a class="nav-link" href="about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/contact">Contacts</a></li>
+            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/about">About</a></li>
             <c:if test="${isAuthenticated}">
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/do_logout"><i class="glyphicon glyphicon-log-in"></i>Logout</a></li>
             </c:if>
             <c:if test="${!isAuthenticated}">
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/registration">Registration</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/login"><i class="glyphicon glyphicon-log-in"></i>Login</a></li>
             </c:if>
             <c:if test="${isCustomer}">
@@ -50,7 +49,7 @@
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/manager/discounts/add"><i class="glyphicon glyphicon-log-in"></i>Create Discount</a></li>
             </c:if>
         </ul>
-        <a href="?theme=dark">dark</a> | <a href="?theme=light">light</a>
+        <a href="${pageContext.request.contextPath}/?theme=dark">dark</a> | <a href="${pageContext.request.contextPath}/?theme=light">light</a>
     </div>
 </nav>
 </body>

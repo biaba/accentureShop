@@ -27,7 +27,6 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.servlet.ServletContext;
 import java.util.Arrays;
@@ -54,9 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(corsConfigurationSource()).and()
                 .authorizeRequests()
-                .antMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
-                .antMatchers("/customer/**").hasAnyRole("CUSTOMER", "LYCUSTOMER", "ADMIN")
-                .antMatchers("/manager/**", "/customer/**", "/cart").authenticated()
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/manager/**").permitAll()
+                .antMatchers("/customer/**").hasAnyRole("CUSTOMER", "LYCUSTOMER", "ADMIN", "MANAGER")
+               // .antMatchers("/manager/**", "/customer/**", "/cart").authenticated()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(authorFailHandler)
@@ -135,6 +135,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration2.setAllowedHeaders(Collections.singletonList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/test/**", configuration);
+        source.registerCorsConfiguration("/manager/**", configuration);
         source.registerCorsConfiguration("/rest/**", configuration2);
         return source;
     }

@@ -70,9 +70,9 @@ public class TestController implements ServletContextAware {
         System.out.println(" csrf is in Request Attribute: /request - in Header/" + token.getHeaderName()+" token /value/ "+token.getToken()+" and /response - in Parameter/ "+ token.getParameterName());
 
         System.out.println("Request attributes (one of them _csrf): "+request.getAttributeNames());
-        Iterator it = request.getAttributeNames().asIterator();
-        while(it.hasNext()){
-            System.out.println("Request attribute: "+it.next());
+        Enumeration<String> it = request.getAttributeNames();
+        while(it.hasMoreElements()){
+            System.out.println("Request attribute: "+it.nextElement());
         }
 
 
@@ -114,7 +114,7 @@ public class TestController implements ServletContextAware {
             // getting entity from with composite primary key
         PurchaseProductId id = new PurchaseProductId();
         id.setPurchaseId(3l);
-        id.setProductId(1l);
+        id.setProductId(2l);
         PurchasesProducts pp = ppRepo.getById(id);
             // changing amount
         pp.setAmount(4);
@@ -151,9 +151,9 @@ public class TestController implements ServletContextAware {
         System.out.println("Getting value from param: "+req.getParameter("val"));
         System.out.println("Getting value from param: "+req.getParameter("_csrf"));
         HttpSession session = req.getSession();
-        Iterator it = session.getAttributeNames().asIterator();
-        while(it.hasNext()) {
-            System.out.println("Session "+ it.next());
+        Enumeration<String> it = session.getAttributeNames();
+        while(it.hasMoreElements()) {
+            System.out.println("Session "+ it.nextElement());
         }
         System.out.println("CSRF is in Session: "+ session.getAttribute("org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN"));
         System.out.println("CSRF is in Request Attribute: " + req.getAttribute("_csrf"));

@@ -36,8 +36,6 @@ public class CustomerController {
         for(Purchase p: user.getPurchases()){
             p.feDateCreated = AddDateUtils.dateWithoutTime(p.getDateCreated());
         }
-        Map<String, String> lastNames = userService.findAllUsers().stream().collect(Collectors.toMap(User::getFirstName, User::getUsername));
-        model.addAttribute("lastNames", lastNames);
         model.addAttribute("user", user);
         return "profile";
     }

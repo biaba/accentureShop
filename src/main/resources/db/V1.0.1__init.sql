@@ -1,29 +1,20 @@
-CREATE SCHEMA accenture;
-
-use accenture;
---
--- Table structure for table user
--- Passwords are encrypted using BCrypt
--- Passwords generated at: http://www.luv2code.com/generate-bcrypt-password
--- Passwords for created users: the same what username (e.g. uname: admin pssw: admin)
---
-DROP TABLE IF EXISTS user;
-
 CREATE TABLE IF NOT EXISTS user (
     id int(11) NOT NULL AUTO_INCREMENT,
+    first_name varchar(50),
+    last_name varchar(50),
     username varchar(50) NOT NULL,
     email varchar(50) NOT NULL,
     password char(80) NOT NULL,
+    address char(200),
     PRIMARY KEY (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 --
 -- Dumping data for user
 --
-INSERT INTO user (email, password, username) VALUES
-                                                 ('admin@gmail.com', '$2a$10$62AAhgEWKwHLzEs1k1dqEuwOVHIM2MgCbI.yzLbx./5m2md9StfAC','admin'),
-                                                 ('baiba.skujevsk@gmail.com', '$2a$10$TZXYm3FwHbhLlGkmClsIpOnk7jQcOKe2Rt2ByHMUsTNC.u4alo5Gy','manager'),
-                                                 ('aprily@inbox.lv', '$2a$10$BPFrIEJvcjMY8oV2cQHYS.hqO9g6oAXKBqWOQtcT24GBRtBIw8rCq','customer');
+INSERT INTO user (first_name, last_name, email, password, username) VALUES
+                                                 ('adina','jojo','admin@gmail.com', '$2a$10$62AAhgEWKwHLzEs1k1dqEuwOVHIM2MgCbI.yzLbx./5m2md9StfAC','admin'),
+                                                 ('baiba','lapsa','baiba.skujevsk@gmail.com', '$2a$10$TZXYm3FwHbhLlGkmClsIpOnk7jQcOKe2Rt2ByHMUsTNC.u4alo5Gy','manager'),
+                                                 ('juris','ozols','aprily@inbox.lv', '$2a$10$BPFrIEJvcjMY8oV2cQHYS.hqO9g6oAXKBqWOQtcT24GBRtBIw8rCq','customer');
 
 --
 -- Creating table for role
@@ -92,6 +83,7 @@ INSERT INTO discount (promo, date_from, date_to, percentage) VALUES
                                                                  ('NEWYEAR', now(), '2021-12-31', 20),
                                                                  ('LOYAL', null, null, 5),
                                                                  ('XMAS', '2021-12-10', '2021-12-24', 30);
+
 
 --
 -- Creating table for product
@@ -218,26 +210,5 @@ CREATE TABLE IF NOT EXISTS chart_item (
     ON DELETE NO ACTION ON UPDATE NO ACTION
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Checking data
---
-SELECT * FROM purchase;
 
--- Selecting products with related discounts
 
-SELECT * FROM product p
-                  LEFT JOIN
-              discount d
-              ON p.discount_id = d.id;
-
--- Selecting purchase with related product and customer
-
-SELECT *
-FROM purchase AS pur
-         LEFT JOIN purchases_products AS pp
-                   ON pur.id = pp.purchase_id
-         LEFT JOIN product AS pr
-                   ON pp.product_id = pr.id;
-
-use accenture;
-SELECT * FROM role;
